@@ -54,4 +54,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employee;
     }
 
+    @Override
+    public void save(Employee employee) {
+        employeeMapper.save(employee);
+    }
+
 }
