@@ -1,6 +1,7 @@
 package com.sky.controller.admin;
 
 import com.fasterxml.jackson.databind.ser.Serializers;
+import com.github.pagehelper.Page;
 import com.sky.constant.JwtClaimsConstant;
 import com.sky.constant.MessageConstant;
 import com.sky.constant.PasswordConstant;
@@ -8,8 +9,10 @@ import com.sky.constant.StatusConstant;
 import com.sky.context.BaseContext;
 import com.sky.dto.EmployeeDTO;
 import com.sky.dto.EmployeeLoginDTO;
+import com.sky.dto.EmployeePageQueryDTO;
 import com.sky.entity.Employee;
 import com.sky.properties.JwtProperties;
+import com.sky.result.PageResult;
 import com.sky.result.Result;
 import com.sky.service.EmployeeService;
 import com.sky.utils.JwtUtil;
@@ -21,10 +24,7 @@ import org.apache.logging.log4j.message.Message;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -101,5 +101,23 @@ public class EmployeeController {
         employee.setUpdateUser(BaseContext.getCurrentId());
         employeeService.save(employee);
         return Result.success(MessageConstant.SUCCESS_SAVE);
+    }
+
+    /**
+     * 员工分页列表查询
+     * @param pageQueryDTO
+     * @return
+     */
+    @ApiOperation("员工分页列表查询")
+    @GetMapping("/page")
+    public Result pageinfo(EmployeePageQueryDTO pageQueryDTO){
+        PageResult pageResult = employeeService.page(pageQueryDTO);
+        return Result.success(pageResult);
+    }
+    @ApiOperation("员工状态更新")
+    @PostMapping("/status/{status}")
+    public Result updateStatus(@PathVariable Integer status,Long id){
+        employeeService.updateStatus(status,id);
+        return Result.success();
     }
 }
