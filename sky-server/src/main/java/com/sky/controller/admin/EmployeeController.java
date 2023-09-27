@@ -95,10 +95,6 @@ public class EmployeeController {
         BeanUtils.copyProperties(employeeDTO,employee);
         employee.setStatus(StatusConstant.ENABLE);
         employee.setPassword(DigestUtils.md5DigestAsHex(PasswordConstant.DEFAULT_PASSWORD.getBytes()));
-        employee.setCreateTime(LocalDateTime.now());
-        employee.setUpdateTime(LocalDateTime.now());
-        employee.setCreateUser(BaseContext.getCurrentId());
-        employee.setUpdateUser(BaseContext.getCurrentId());
         employeeService.save(employee);
         return Result.success(MessageConstant.SUCCESS_SAVE);
     }
@@ -118,6 +114,18 @@ public class EmployeeController {
     @PostMapping("/status/{status}")
     public Result updateStatus(@PathVariable Integer status,Long id){
         employeeService.updateStatus(status,id);
+        return Result.success();
+    }
+    @ApiOperation("员工查询")
+    @GetMapping("{id}")
+    public Result getById(@PathVariable Integer id){
+        Employee employee = employeeService.getById(id);
+        return Result.success(employee);
+    }
+    @ApiOperation("员工修改")
+    @PutMapping
+    public Result updateEmployee(@RequestBody Employee employee){
+        employeeService.updateEmployee(employee);
         return Result.success();
     }
 }

@@ -1,8 +1,10 @@
 package com.sky.service;
 
+import com.sky.annotation.autofill;
 import com.sky.dto.EmployeeLoginDTO;
 import com.sky.dto.EmployeePageQueryDTO;
 import com.sky.entity.Employee;
+import com.sky.enumeration.OperationType;
 import com.sky.result.PageResult;
 
 public interface EmployeeService {
@@ -33,4 +35,18 @@ public interface EmployeeService {
      * @param id
      */
     void updateStatus(Integer status, Long id);
+
+    /**
+     * 员工查询
+     * @param id
+     * @return
+     */
+    Employee getById(Integer id);
+
+    /**
+     * 员工修改
+     * @param employee
+     */
+    @autofill(value = OperationType.UPDATE)
+    void updateEmployee(Employee employee);
 }

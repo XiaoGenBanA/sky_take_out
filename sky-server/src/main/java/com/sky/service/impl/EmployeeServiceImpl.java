@@ -89,4 +89,20 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeMapper.update(employee);
     }
 
+    /**
+     * 员工查询
+     * @param id
+     * @return
+     */
+    public Employee getById(Integer id) {
+        Employee employee = employeeMapper.getById(id);
+        return employee;
+    }
+
+    @Override
+    public void updateEmployee(Employee employee) {
+        employeeMapper.update(employee);
+
+    }
+
 }
