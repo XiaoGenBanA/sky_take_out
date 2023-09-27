@@ -53,7 +53,7 @@ public class AutofillAspect {
 
             try {
                 Method setUpdateTime = object.getClass().getDeclaredMethod(AutoFillConstant.SET_UPDATE_TIME, LocalDateTime.class);
-                Method setUpdateUser= object.getClass().getDeclaredMethod(AutoFillConstant.SET_UPDATE_USER, LocalDateTime.class);
+                Method setUpdateUser= object.getClass().getDeclaredMethod(AutoFillConstant.SET_UPDATE_USER, Long.class);
                 setUpdateTime.invoke(object,LocalDateTime.now());
                 setUpdateUser.invoke(object,BaseContext.getCurrentId());
             } catch (Exception e) {
